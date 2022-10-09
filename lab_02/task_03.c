@@ -17,7 +17,7 @@ int main()
 {
     setbuf(stdout, NULL);
     int child[N];
-    char* commands[N] = { "./p11.exe", "./app.exe"};
+    char* commands[N] = { "./p_1.out", "./p_2.out"};
     
     printf("Parent process --> START \nPID: %d, GROUP: %d\n\n", getpid(), getpgrp());
 
