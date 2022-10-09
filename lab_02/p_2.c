@@ -1,48 +1,92 @@
+// Заполнить матрицу по спирали по часовой стрелке.
+
 #include <stdio.h>
-#include <string.h>
+#include <stdlib.h>
 
-#define N 16 
+#define __USE_MINGW_ANSI_STDIO 1
 
-void revstr(register char * str){
-    register int i, len = 0;
-    //Определяем длину строки
-    len = strlen(str);
-    //Выполняем реверс символов в строке
-    for (i = 0; i <= len / 2; i++){
-        *(str + len - i) = *(str + i);  
-        *(str + i) = *(str + len - i - 1);
-    } 
+#define INVALID_INPUT_COUNT_ROWS 2
+#define INVALID_INPUT_COUNT_COLUMNS 3
+#define INVALID_INPUT_MATRIX 4
+#define INVALID_INPUT_SIZE_MATRIX 5
 
-    //Сдвигаем вторую половину символов влево на 1 символ
-    for (i = len / 2; i <= len; i++)
-        *(str + i) = *(str + i + 1);
-        
-    //Устанавливаем символ завершения строки
-    *(str + len) = '\0';
-}
+#define R_MAX 100
+#define R 10
+#define C_MAX 100
+#define C 10
 
-
-void read_string(char *str)
+void fill_one_circle(int *last_num, size_t circle_number, size_t r, size_t c, int matrix[][C_MAX])
 {
-    printf("Input string (max len = 16): ");
-    if (scanf("%s", str) != 1)
+    for (size_t j = circle_number; j < c - circle_number; j++)
     {
-        printf("Error, input only string (max len = 16)\n");
+        (*last_num)++;
+        matrix[circle_number][j] = *last_num;
+    }
+
+    for (size_t i = circle_number + 1; i < r - circle_number; i++)
+    {
+        (*last_num)++;
+        matrix[i][c - circle_number - 1] = *last_num;
+    }
+
+    for (size_t j = c - circle_number - 1; j > circle_number; j--)
+    {
+        (*last_num)++;
+        matrix[c - circle_number - 1][j - 1] = *last_num;
+    }
+
+    for (size_t i = r - circle_number - 1; i > circle_number + 1; i--)
+    {
+        (*last_num)++;
+        matrix[i - 1][circle_number] = *last_num;
     }
 }
 
-
-void main()
+void fill(size_t r, size_t c, int matrix[][C_MAX])
 {
-    // char str[] = "BMSTU IU7-52";
-    char str[N];
-    
-    printf("\n !proc 2 (reverse str) START\n");
-    read_string(str);
-    printf("String before reverse: %s\n", str);
+    int last_num = 0;
+    for (size_t i = 0; i <= r / 2; i++)
+        fill_one_circle(&last_num, i, r, c, matrix);
+}
 
-    revstr(str);
+void print(size_t r, size_t c, int matrix[][C_MAX])
+{
+    for (size_t i = 0; i < r; i++)
+    {
+        for (size_t j = 0; j < c; j++)
+            printf("%d ", matrix[i][j]);
+        printf("\n");
+    }
+}
 
-    printf("String after reverse: %s", str);
-    printf("\n !proc 2 (reverse str) END\n\n");
+int main(void)
+{
+    size_t r, c;
+    int matrix[R_MAX][C_MAX];
+
+	printf("Input count of rows: ");
+    if (scanf("%zu", &r) != 1 || r == 0 || r > R)
+    {
+        printf("Invalid input count of rows.");
+        return INVALID_INPUT_COUNT_ROWS;
+    }
+	
+	printf("Input count of columns: ");
+    if (scanf("%zu", &c) != 1 || c == 0 || c > C)
+    {
+        printf("Invalid input count of colums.");
+        return INVALID_INPUT_COUNT_COLUMNS;
+    }
+
+    if (r != c)
+    {
+        printf("Invalid input size of matrix. Count of rows and count of columns must be equal");
+        return INVALID_INPUT_SIZE_MATRIX;
+    }
+
+    fill(r, c, matrix);
+
+    print(r, c, matrix);
+
+    return EXIT_SUCCESS;
 }

@@ -1,69 +1,62 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-#define N 7
+#define __USE_MINGW_ANSI_STDIO 1
 
-void sort_buble(int *mass,  int n)
+#define INVALID_INPUT_SIZE 2
+#define INVALID_INPUT_ARRAY 3
+#define NO_ODD 4
+
+#define N_MAX 1000
+#define N 10
+
+int input(size_t n, int arr[])
 {
-    int no_swap = 0;
-    int tmp;
-    
-    for (int i = n - 1; i >= 0; i--)
-    {
-        no_swap = 1;
-        for (int j = 0; j < i; j++)
-        {
-            if (mass[j] > mass[j + 1])
-            {
-                tmp = mass[j];
-                mass[j] = mass[j + 1];
-                mass[j + 1] = tmp;
-                no_swap = 0;
-            }
-        }
-        if (no_swap == 1)
-            break;
-    }
+	printf("Input array (len %d): ", n);
+    for (size_t i = 0; i < n; i++)
+        if (scanf("%d", &arr[i]) != 1)
+            return EXIT_FAILURE;
+    return EXIT_SUCCESS;
 }
 
-void read_array(int *array, int n)
+int product_odd(size_t n, int arr[], int *prod)
 {
-    printf("P1: Input array (len = %d): ", n);
-    for (int i = 0; i < n; i++)
-    {
-        int a;
-        if (scanf("%d", &a) != 1)
+    int count_odd = 0;
+    for (size_t i = 0; i < n; i++)
+        if (arr[i] % 2 != 0)
         {
-            printf("Error, input only integer!\n");
+            count_odd++;
+            (*prod) *= arr[i];
         }
-        else
-        {
-            array[i] = a;
-        }
-    }
-    printf("\n");
+    return count_odd;
 }
 
-void main()
+int main(void)
 {
-    // int mass[N] = {4, 9, 2, -1, 8, 3, 5};
-    int mass[N];
+    size_t n;
+    int arr[N_MAX];
+    int prod = 1;
 
-    printf("\n !proc 1 (sort array) START\n");
-    read_array(mass, N);
-
-    printf("Array before: ");
-    for (int i = 0; i < N; i++)
+	printf("Input size of array: ");
+    if (scanf("%zu", &n) != 1 || n == 0 || n > N)
     {
-        printf("%d ", mass[i]);
+        printf("Invalid input size of array");
+        return INVALID_INPUT_SIZE;
     }
-    printf("\n");
 
-    sort_buble(mass, N);
-
-    printf("Array after: ");
-    for (int i = 0; i < N; i++)
+    if (input(n, arr))
     {
-        printf("%d ", mass[i]);
+        printf("Invalid input array");
+        return INVALID_INPUT_ARRAY;
     }
-    printf("\n !proc 1 (sort array) END\n\n");
+
+    if (product_odd(n, arr, &prod) == 0)
+    {
+        printf("No odd elements in the array");
+        return NO_ODD;
+    }
+
+    printf("Product of odd elements = %d", prod);
+
+    return EXIT_SUCCESS;
 }
