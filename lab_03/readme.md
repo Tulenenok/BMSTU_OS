@@ -20,6 +20,13 @@
 3. Наслаждаемся
    ![image](https://user-images.githubusercontent.com/78147880/198903358-48121956-cde4-4c1d-9d1b-b60e57b3171d.png)
 
+4. Как убить процесс (или передать ему сигнал)
+   ```bash
+   ps -ajx | grep "./main"   # смотри PID (вторая колонка) процесса
+   sudo kill -SIGHUB 31591   # sudo kill -<сигнал> <PID>
+   sudo kill 31591           # если нужно остановить процесс (SIGTERM по умолчанию)
+   ```
+
 -----
 
 # Процессы-демоны
