@@ -100,8 +100,6 @@ ps -axj
 
 `syslog` - центраизованный механизм регистрации сообщений об ошибках.
 
-![image-20221030174255452](/Users/gurovana/Library/Application Support/typora-user-images/image-20221030174255452.png)
-
 Существует три способа регистарации сообщений:
 
 1. Процедуры ядра могут обращаться к функции  **`log`**  (нас не интересует)
@@ -190,14 +188,18 @@ P.S. во многих системах имеется программа `logge
 9. `cron` - производит запуск команд в определенное время.
 10. `cupsd` - сервер печати, обслуживает запросы к принтеру.
 
+**Схема работы syslogd**
+
+<img width="684" alt="image-20221030174255452" src="https://user-images.githubusercontent.com/78147880/198892087-870b7095-d92f-42ed-b088-a098f6868faf.png">
+
 **Взможные значения, которые могут быть включены в аргумент option функции openlog**
 
-![image-20221030181155241](/Users/gurovana/Library/Application Support/typora-user-images/image-20221030181155241.png)
+<img width="638" alt="image-20221030181155241" src="https://user-images.githubusercontent.com/78147880/198892100-bb1b14b2-9e5c-4620-9188-17e75d897833.png">
 
 **Возможные значения аргемента facility функции openlog**
 
-![image-20221030181642664](/Users/gurovana/Library/Application Support/typora-user-images/image-20221030181642664.png)
+<img width="638" alt="image-20221030181642664" src="https://user-images.githubusercontent.com/78147880/198892115-5f0c7b79-87b1-4ee1-9d53-67ce4a5fe3cc.png">
 
 **Уровни важности сообщений**
 
-![image-20221030181714369](/Users/gurovana/Library/Application Support/typora-user-images/image-20221030181714369.png)
+<img width="638" alt="image-20221030181714369" src="https://user-images.githubusercontent.com/78147880/198892135-8fc14753-7a84-4b91-a2e3-322de244ec79.png">
