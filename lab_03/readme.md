@@ -227,3 +227,11 @@ P.S. во многих системах имеется программа `logge
 ### Уровни важности сообщений
 
 <img width="638" alt="image-20221030181714369" src="https://user-images.githubusercontent.com/78147880/198892135-8fc14753-7a84-4b91-a2e3-322de244ec79.png">
+
+### О процессе SIGHUB
+
+<img width="687" alt="image" src="https://user-images.githubusercontent.com/78147880/198905993-7a9f2729-261b-4ffe-bcfb-6eefd5eb37b8.png">
+
+### О процессе SIGTERM
+
+<img width="687" alt="image" src="https://user-images.githubusercontent.com/78147880/198906036-2dbb4505-6021-433b-be32-fbdbcb035dbe.png">
