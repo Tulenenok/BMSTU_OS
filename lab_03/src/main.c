@@ -12,6 +12,13 @@
 #include <time.h>
 
 #define LOCKFILE "/var/run/daemon.pid"
+/* 
+ * Передается функции open
+ * S_IRUSR - пользователь имеет право на чтение файла 
+ * S_IWUSR - пользователь имеет право на запись в файл
+ * S_IRGRP - группа имеет право на чтение
+ * S_IROTH - все остальные имеют право наа чтение
+ */
 #define LOCKMODE (S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH)
 
 /* Эту функцию может вызывать приложение, желающее стать демоном */
@@ -95,6 +102,8 @@ int already_running(void)
     char buf[16];
 
     /* Каждая копия демона пытается создать файл */
+    /* O_RDWR - открыть для чтения и записи */
+    /* O_CREAT - если файл не существует, то будет создан */
     fd = open(LOCKFILE, O_RDWR | O_CREAT, LOCKMODE);
     if (fd < 0) {
         syslog(LOG_ERR, "невозможно открыть %s: %s", LOCKFILE, strerror(errno));
