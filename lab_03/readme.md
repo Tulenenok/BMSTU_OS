@@ -188,18 +188,18 @@ P.S. во многих системах имеется программа `logge
 9. `cron` - производит запуск команд в определенное время.
 10. `cupsd` - сервер печати, обслуживает запросы к принтеру.
 
-**Схема работы syslogd**
+### Схема работы syslogd
 
 <img width="684" alt="image-20221030174255452" src="https://user-images.githubusercontent.com/78147880/198892087-870b7095-d92f-42ed-b088-a098f6868faf.png">
 
-**Взможные значения, которые могут быть включены в аргумент option функции openlog**
+### Возможные значения, которые могут быть включены в аргумент option функции openlog
 
 <img width="638" alt="image-20221030181155241" src="https://user-images.githubusercontent.com/78147880/198892100-bb1b14b2-9e5c-4620-9188-17e75d897833.png">
 
-**Возможные значения аргемента facility функции openlog**
+### Возможные значения аргемента facility функции openlog
 
 <img width="638" alt="image-20221030181642664" src="https://user-images.githubusercontent.com/78147880/198892115-5f0c7b79-87b1-4ee1-9d53-67ce4a5fe3cc.png">
 
-**Уровни важности сообщений**
+### Уровни важности сообщений
 
 <img width="638" alt="image-20221030181714369" src="https://user-images.githubusercontent.com/78147880/198892135-8fc14753-7a84-4b91-a2e3-322de244ec79.png">
