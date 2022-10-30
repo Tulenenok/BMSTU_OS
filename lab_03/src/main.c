@@ -9,6 +9,7 @@
 #include <errno.h>
 #include <stdio.h>
 #include <sys/stat.h>
+#include <pthread.h>
 #include <time.h>
 
 #define LOCKFILE "/var/run/daemon.pid"
