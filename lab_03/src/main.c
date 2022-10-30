@@ -43,7 +43,7 @@ void daemonize(const char * cmd)
     sa.sa_flags = 0;
 	
     if (sigaction(SIGHUP, &sa, NULL) < 0)
-        quit("%s: невозможно игнорировать сигнал SIGHUP ", cmd);
+        err_quit("%s: невозможно игнорировать сигнал SIGHUP ", cmd);
 
 
     /* 
