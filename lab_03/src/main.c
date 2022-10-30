@@ -9,6 +9,7 @@
 #include <errno.h>
 #include <stdio.h>
 #include <sys/stat.h>
+#include <time.h>
 
 #define LOCKFILE "/var/run/daemon.pid"
 #define LOCKMODE (S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH)
@@ -85,6 +86,7 @@ void daemonize(const char * cmd)
 
 void main(int argc, char*argv[]) {
     char *cmd;
+    long int ttime;
 
     if ((strrchr(argv[0], '/')) == NULL)
         cmd = argv[0];
@@ -94,7 +96,8 @@ void main(int argc, char*argv[]) {
     daemonize(cmd);
 
     for (;;) {
-        syslog(LOG_INFO, "++++++++++++++++++++");
+        ttime = time(NULL);
+        syslog(LOG_INFO, "Логин пользователя: %s, текущее время: %s\n", getlogin(), ctime(&ttime));
         sleep(1);
     }
     
