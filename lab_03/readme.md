@@ -18,8 +18,9 @@
    sudo cat syslog
    ```
 3. Наслаждаемся
+   ![image](https://user-images.githubusercontent.com/78147880/198903358-48121956-cde4-4c1d-9d1b-b60e57b3171d.png)
 
----
+-----
 
 # Процессы-демоны
 
