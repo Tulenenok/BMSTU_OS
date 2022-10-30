@@ -26,6 +26,8 @@
    sudo kill -SIGHUB 31591   # sudo kill -<сигнал> <PID>
    sudo kill 31591           # если нужно остановить процесс (SIGTERM будет по умолчанию)
    ```
+   ![image](https://user-images.githubusercontent.com/78147880/198907005-15d2d2c7-d17c-4552-be84-000bda617281.png)
+
 
 -----
 
