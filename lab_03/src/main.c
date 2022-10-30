@@ -21,6 +21,8 @@
  */
 #define LOCKMODE (S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH)
 
+sigset_t mask;
+
 /* Эту функцию может вызывать приложение, желающее стать демоном */
 void daemonize(const char *cmd)
 {
@@ -130,6 +132,34 @@ int already_running(void)
     return 0;
 }
 
+void *thr_fn(void *arg)
+{
+    int err, signo;
+
+    for (;;) 
+    {
+        err = sigwait(&mask, &signo);
+        if (err != 0) {
+            syslog(LOG_ERR, "ошибка вызова функции sigwait");
+            exit(1);
+        }
+
+        switch (signo) {
+        case SIGHUP:
+            syslog(LOG_INFO, "Получен сигнал SIGHUP; Логин пользователя: %s", getlogin());
+            break;
+        case SIGTERM:
+            syslog(LOG_INFO, "Получен сигнал SIGTERM, выход");
+            exit(0);
+        default:
+            syslog(LOG_INFO, "Получен непредвиденный сигнал %d\n", signo);
+            break;
+        }
+    }
+
+    return 0;
+}
+
 /*
  * Если функция будет вызвана из программы, которая затем приостанавливает работу
  * мы сможем проверить состояние демона с помощью команды ps -axj
@@ -141,6 +171,9 @@ int already_running(void)
 void main(int argc, char*argv[]) {
     char *cmd = "my_cute_daemon";
     long int ttime;
+    int err;
+    pthread_t tid;
+    struct sigaction sa;
 
     daemonize(cmd);
 
@@ -149,6 +182,42 @@ void main(int argc, char*argv[]) {
         syslog(LOG_ERR, "Ошибка: демон уже запущен");
         exit(1);
     }
+
+    /*
+     * Восстановить действие по умолчанию для сигнала SIGHUP
+     * и заблокировать все сигналы.
+     */
+    sa.sa_handler = SIG_IGN;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = 0;
+	
+    if (sigaction(SIGHUP, &sa, NULL) < 0)
+    {
+        syslog(LOG_ERR, "Невозможно восставновить действие SIG_DFL для SIGHUP");
+        exit(1);
+    }
+    
+    sigfillset(&mask);
+    
+    if ((err = pthread_sigmask(SIG_BLOCK, &mask, NULL)) != 0)
+    {
+        syslog(LOG_ERR, "Ошибка выполнения операции SIG_BLOCK");
+        exit(1);
+    }
+
+    err = pthread_create(&tid, NULL, thr_fn, 0);
+    if (err != 0)
+    {
+        syslog(LOG_ERR, "Невозможно создать поток");
+        exit(1);
+    }
+    /* 
+     * Теперь у нас есть поток, который будет заниматься обработкой SIGHUP и SIGTERM 
+     * Их действия по умолчанию - завершение процесса. Но так как они заблокированы,
+     * демон завершаться не будет. Вместо этого отдельный потомок будет получать номера
+     * доставленных сигналов с помощью функции sigwait.
+     */
+
 
     for (;;) {
         ttime = time(NULL);
