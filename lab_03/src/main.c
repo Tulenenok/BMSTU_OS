@@ -15,7 +15,6 @@
 #define LOCKMODE (S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH)
 
 /* Эту функцию может вызывать приложение, желающее стать демоном */
-
 void daemonize(const char *cmd)
 {
     int i, fd0, fd1, fd2;
@@ -74,8 +73,22 @@ void daemonize(const char *cmd)
     }
 }
 
-/* Эта функция гарантирует запись только одной копии демона */
+/* Функция для управления блокировкой (см. already_running) */
+int lockfile(int fd)
+{
+    struct flock fl;                /* Структура, использующаяся для управления блокировкой */
 
+    fl.l_type = F_WRLCK;            /* Режим бллокирования - разделение записи*/
+    fl.l_start = 0;                 /* Относительное смещение в байтах */
+    fl.l_whence = SEEK_SET;         /* SEEK_SET, SEEK_CUR, SEEK_END */
+    fl.l_len = 0;                   /* Длина (0 = разделение до конца файла) */
+
+    /* fcntl - манипуляции с файловым дескриптором */
+    /* F_SETLK - установить блокировку на файл */
+    return (fcntl(fd, F_SETLK, &fl));
+}
+
+/* Эта функция гарантирует запись только одной копии демона */
 int already_running(void)
 {
     int fd;
