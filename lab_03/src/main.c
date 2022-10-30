@@ -16,7 +16,7 @@
 
 /* Эту функцию может вызывать приложение, желающее стать демоном */
 
-void daemonize(const char * cmd)
+void daemonize(const char *cmd)
 {
     int i, fd0, fd1, fd2;
     pid_t pid;
@@ -46,7 +46,6 @@ void daemonize(const char * cmd)
     if (sigaction(SIGHUP, &sa, NULL) < 0)
         err_quit("%s: невозможно игнорировать сигнал SIGHUP ", cmd);
 
-
     /* 
      * Назначить корневой каталог текущим рабочим каталогом,
      * чтобы впоследствии можно было отмонтировать файловую систему
@@ -75,6 +74,39 @@ void daemonize(const char * cmd)
     }
 }
 
+/* Эта функция гарантирует запись только одной копии демона */
+
+int already_running(void)
+{
+    int fd;
+    char buf[16];
+
+    /* Каждая копия демона пытается создать файл */
+    fd = open(LOCKFILE, O_RDWR | O_CREAT, LOCKMODE);
+    if (fd < 0) {
+        syslog(LOG_ERR, "невозможно открыть %s: %s", LOCKFILE, strerror(errno));
+        exit(1);
+    }
+
+    /* Файл уже заблокирован */
+    if (lockfile(fd) < 0) {
+        if (errno == EACCES || errno == EAGAIN) {
+            close(fd);
+            return 1;
+        }
+        syslog(LOG_ERR, "невозможно установить блокировку на %s: %s", LOCKFILE, strerror(errno));
+        exit(1);
+    }
+
+    /* Усекаем размер файла до 0 */
+    ftruncate(fd, 0);
+
+    /* Записываем в файл идентификатор процесса */
+    sprintf(buf, "%ld", (long)getpid());
+    write(fd, buf, strlen(buf) + 1);
+
+    return 0;
+}
 
 /*
  * Если функция будет вызвана из программы, которая затем приостанавливает работу
@@ -85,15 +117,16 @@ void daemonize(const char * cmd)
  */
 
 void main(int argc, char*argv[]) {
-    char *cmd;
+    char *cmd = "my_cute_daemon";
     long int ttime;
 
-    if ((strrchr(argv[0], '/')) == NULL)
-        cmd = argv[0];
-    else
-        cmd++;
-
     daemonize(cmd);
+
+    if (already_running())
+    {
+        syslog(LOG_ERR, "Ошибка: демон уже запущен");
+        exit(1);
+    }
 
     for (;;) {
         ttime = time(NULL);
