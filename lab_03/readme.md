@@ -259,3 +259,4 @@ P.S. во многих системах имеется программа `logge
 
 ### О буковках 
 ![image](https://user-images.githubusercontent.com/78147880/199207218-0bb231e1-4480-4a88-882e-17e4fd2617c8.png)
+![image](https://user-images.githubusercontent.com/78147880/199207431-07a4aa9c-dfea-4c21-b8ae-77520d63df0f.png)
