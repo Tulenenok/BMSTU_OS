@@ -40,9 +40,9 @@ void daemonize(const char *cmd)
         err_quit("%s: невозможно получить максимальный номер дескриптора ", cmd);
     
     /* Стать лидером новой сессии, чтобы утратить управляющий терминал */
-    if ((pid = fork()) < 0 )
+    if ((pid = fork()) == -1)
         err_quit("%s: ошибка вызова функции fork", cmd);
-    else if (pid != 0)
+    else if (pid > 0)
         exit(0);   /* Родительский процесс */
 
     setsid(); /* Создали новую сессию */
@@ -53,14 +53,20 @@ void daemonize(const char *cmd)
     sa.sa_flags = 0;
 	
     if (sigaction(SIGHUP, &sa, NULL) < 0)
+    {
         err_quit("%s: невозможно игнорировать сигнал SIGHUP ", cmd);
+        exit(1);
+    }
 
     /* 
      * Назначить корневой каталог текущим рабочим каталогом,
      * чтобы впоследствии можно было отмонтировать файловую систему
      */
     if (chdir("/") < 0)
-        err_quit("%s: невозмжно сделать текущим рабочим каталогом /");
+    {
+        err_quit("%s: невозможно сделать текущим рабочим каталогом /");
+        exit(1);
+    }
 
     /* Закрыть все открытые файловые дескриторы */
     if (rl.rlim_max == RLIM_INFINITY)
@@ -78,7 +84,7 @@ void daemonize(const char *cmd)
     openlog(cmd, LOG_CONS, LOG_DAEMON);
     if (fd0 != 0 || fd1 != 1 || fd2 != 2)
     {
-        syslog(LOG_ERR, "ошибочные файлвые дескрипторы %d %d %d", fd0, fd1, fd2);
+        syslog(LOG_ERR, "ошибка  stdin, stdout, stderr: %d %d %d", fd0, fd1, fd2);
         exit(1);
     }
 }
@@ -222,10 +228,13 @@ void main(int argc, char*argv[]) {
 
     for (;;) {
         ttime = time(NULL);
-        syslog(LOG_INFO, "Логин пользователя: %s, текущее время: %s\n", getlogin(), ctime(&ttime));
+        syslog(LOG_INFO, "Логин пользователя: %s, текущее время: %s   ---\n", getlogin(), ctime(&ttime));
         sleep(1);
     }
     
     exit(0);
 }   
 
+// S - прерываемый процесс
+// s - лидер сессии 
+// l - многопоточный процесс
