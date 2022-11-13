@@ -189,7 +189,7 @@ int semop(int semid, struct sembuf semoparray[], size_t nops);
 
 ### Системные пределы семафоров
 
-![image-20221113150657096](/Users/gurovana/Library/Application Support/typora-user-images/image-20221113150657096.png) 
+<img width="632" alt="image-20221113150657096" src="https://user-images.githubusercontent.com/78147880/201524010-bce0e4aa-4da9-4509-9b50-6b0aa381e964.png">
 
 ### Про структуру ipc_perm
 
@@ -207,4 +207,4 @@ struct ipc_perm {
 
 Значение поля `mode`:
 
-![image-20221113151512563](/Users/gurovana/Library/Application Support/typora-user-images/image-20221113151512563.png)
+<img width="600" alt="image-20221113151512563" src="https://user-images.githubusercontent.com/78147880/201524015-008e2de8-2daf-47b2-ab96-1b6231c1ced8.png">
