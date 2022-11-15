@@ -44,10 +44,9 @@ void daemonize(const char *cmd)
         err_quit("%s: ошибка вызова функции fork", cmd);
     else if (pid > 0)
         exit(0);   /* Родительский процесс */
-
-    setsid(); /* Создали новую сессию */
-
+	
     /* Обеспечить невозможность обретения управляющего терминала в будущем. */
+    /* Правка Рязановой */
     sa.sa_handler = SIG_IGN;
     sigemptyset(&sa.sa_mask);
     sa.sa_flags = 0;
@@ -57,6 +56,8 @@ void daemonize(const char *cmd)
         err_quit("%s: невозможно игнорировать сигнал SIGHUP ", cmd);
         exit(1);
     }
+
+    setsid(); /* Создали новую сессию */
 
     /* 
      * Назначить корневой каталог текущим рабочим каталогом,
