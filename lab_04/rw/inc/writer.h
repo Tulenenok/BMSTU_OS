@@ -3,6 +3,6 @@
 
 void writer_create(const int sem_id, const int writer_id);
 
-void writer_run(const int sem_id, const int writer_id);
+void writer_work(const int sem_id, const int writer_id);
 
 #endif
