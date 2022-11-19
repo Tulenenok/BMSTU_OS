@@ -50,7 +50,7 @@ void consumer_work(buffer_s* const buffer, const int sem_id, const int con_id)
         perror("Потребитель не смог считать буфер\n");
         exit(-1);
     }
-    printf(" \e[1;32mConsumer #%d \tread:  \t%c \tsleep: %d\e[0m\n", con_id, ch, sleep_time);
+    printf("\033[95mConsumer #%d \tread:  \t%c \tsleep: %d\e[0m\n", con_id, ch, sleep_time);
     // Закончилась критическая зона
 
 	rv = semop(sem_id, consume_end, 2);

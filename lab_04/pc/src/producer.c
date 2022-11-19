@@ -37,7 +37,7 @@ void producer_work(buffer_s *const buffer, const int sem_id, const int pro_id)
         perror("Производитель не может записать символ в буфер.\n");
         exit(-1);
     }
-	printf(" \e[1;31mProducer #%d \twrite: \t%c \tsleep: %d\e[0m \n", pro_id, *(buffer->pptr - 1), sleep_time);
+	printf("\033[94mProducer #%d \twrite: \t%c \tsleep: %d\e[0m \n", pro_id, *(buffer->pptr - 1), sleep_time);
 	// Закончилась критическая зона
 
 	rv = semop(sem_id, producer_end, 2);

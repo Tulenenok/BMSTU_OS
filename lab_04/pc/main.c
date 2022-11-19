@@ -111,8 +111,6 @@ int main(void)
         }
     }
 
-    printf(" \e[1;34mOk\n");
-
 	// 	Помечаем сегмент как удаленный 
 	if (shmctl(shmid, IPC_RMID, NULL))
 	{

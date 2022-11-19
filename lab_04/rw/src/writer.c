@@ -9,13 +9,13 @@ extern int *counter;
 
 struct sembuf start_write[] =
 {
-    {1, 0, 0},    // поставить писателя в режим ожидания
-    {0, 0, 0},    // проверка, есть ли активный читатель
-    {0, 1, 0}     // инкремент активных читателей
+    {1, 0, 0},    // проверяет, есть ли активные читатели 
+    {0, 0, 0},    // проверка, есть ли активный писатели
+    {0, 1, 0}     // инкремент активных писателей
 };
 
 struct sembuf stop_write[] = {
-    {0, -1, 0}
+    {0, -1, 0}    // освободили
 };
 
 
@@ -32,7 +32,7 @@ void writer_work(const int sem_id, const int writer_id)
 	}
 
 	(*counter)++;
-	printf("\e[1;31mWriter #%d \twrite: \t%d \tsleep: %d\e[0m\n",
+	printf("\033[93mWriter #%d \twrite: \t%d \tsleep: %d\e[0m\n",
 				writer_id, *counter, sleep_time);
 
 

@@ -11,6 +11,7 @@ struct sembuf start_read[] =
 {
     {0, 0, 0},     // проверка, есть ли активный писатель
     {1, 1, 0}      // запрещаем читать 
+	// Здесь нет еще одной структуры как у писателя, так как читать одновременно можно
 };
 
 struct sembuf stop_read[] =
@@ -30,7 +31,7 @@ void reader_run(const int sem_id, const int reader_id)
 		exit(-1);
 	}
 
-	printf("\e[1;32mReader #%d \tread: \t%d \tsleep: %d\e[0m \n",
+	printf("\033[92mReader #%d \tread: \t%d \tsleep: %d\e[0m \n",
 				reader_id, *counter, sleep_time);
 	
 	rv = semop(sem_id, stop_read, 1);

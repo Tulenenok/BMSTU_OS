@@ -28,6 +28,7 @@ int main(void)
 		perror("Ошибка при возврата указателя на сегмент\n");
 		return -1;
 	}
+    
     *counter = 0;  
     
     int sem_descr = semget(IPC_PRIVATE, 2, IPC_CREAT | perms);
@@ -70,8 +71,6 @@ int main(void)
             return 1;
         }
     }
-
-    printf(" \e[1;34mOk\n");
 
 	if (shmctl(shmid, IPC_RMID, NULL))
 	{
