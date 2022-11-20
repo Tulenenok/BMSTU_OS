@@ -11,11 +11,11 @@ struct sembuf start_write[] =
 {
     {1, 0, 0},    // проверяет, есть ли активные читатели 
     {0, 0, 0},    // проверка, есть ли активный писатели
-    {0, 1, 0}     // инкремент активных писателей
+    {0, 1, 0}     // увеличили кол-во активных писателей
 };
 
 struct sembuf stop_write[] = {
-    {0, -1, 0}    // освободили
+    {0, -1, 0}    // уменьшили кол-во активных писателей
 };
 
 
@@ -54,7 +54,7 @@ void writer_create(const int sem_id, const int writer_id)
 	}
 	else if (childpid == 0)
 	{
-		while (*counter < 13)                // Почему 13?
+		while (*counter < 20)                
 			writer_work(sem_id, writer_id);
 
 		exit(0);

@@ -9,14 +9,14 @@ extern int *counter;
 
 struct sembuf start_read[] =
 {
-    {0, 0, 0},     // проверка, есть ли активный писатель
-    {1, 1, 0}      // запрещаем читать 
+    {0, 0, 0},     // проверка, есть ли активный писатель (нужно, чтобы их не было)
+    {1, 1, 0}      // есть активный читатель  
 	// Здесь нет еще одной структуры как у писателя, так как читать одновременно можно
 };
 
 struct sembuf stop_read[] =
 {
-    {1, -1, 0}    // разрешаем читать
+    {1, -1, 0}    // количество активных читателей уменьшилось на 1
 };
 
 void reader_run(const int sem_id, const int reader_id)
@@ -52,7 +52,7 @@ void reader_create(const int sem_id, const int reader_id)
 	}
 	else if (childpid == 0)
 	{
-		while (*counter < 13)
+		while (*counter < 20)
 			reader_run(sem_id, reader_id);
 
 		exit(0);

@@ -38,13 +38,13 @@ int main(void)
 		return -1;
 	}
 
-    if (semctl(sem_descr, 0, SETVAL, 0) == -1)           // Семафор для писателей
+    if (semctl(sem_descr, 0, SETVAL, 0) == -1)           // Семафор для писателей (0 - сейчас нет активных)
     {
         perror("Ошибка доступа к семафору" );
         return -1;
     }
 
-    if (semctl(sem_descr, 1, SETVAL, 0) == -1)           // Семафор для читателей
+    if (semctl(sem_descr, 1, SETVAL, 0) == -1)           // Семафор для читателей (0 - сейчас нет активных)
     {
         perror( "Ошибка доступа к семафору" );
         return -1;
@@ -72,17 +72,17 @@ int main(void)
         }
     }
 
-	if (shmctl(shmid, IPC_RMID, NULL))
-	{
-		perror("Ошибка при попытке пометить сегмент как удаленный\n");
-		return -1;
-	}
-
 	if (shmdt(counter) == -1)
     {
 		perror("Ошибка при попытке отключить разделяемый сегмент от адресного пространства процесса.");
         return -1;
     }
+
+    if (shmctl(shmid, IPC_RMID, NULL))
+	{
+		perror("Ошибка при попытке пометить сегмент как удаленный\n");
+		return -1;
+	}
 	
 	if (semctl(sem_descr, 0, IPC_RMID, 0) == -1)
 	{
