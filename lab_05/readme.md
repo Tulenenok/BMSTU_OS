@@ -90,15 +90,13 @@
 
 ### Схема работы читателя
 
-https://pro-prof.com/wp-content/uploads/2020/02/flowchart-hoar_2.png
+<img width="638" alt="image-20221113171348769" src="https://pro-prof.com/wp-content/uploads/2020/02/flowchart-hoar_2.png">
 
 ### Схема работы писателя 
 
-https://pro-prof.com/wp-content/uploads/2020/02/flowchart-hoar_1.png
+<img width="638" alt="image-20221113171348769" src="https://pro-prof.com/wp-content/uploads/2020/02/flowchart-hoar_1.png">
 
-
-
-
+-----
 
 ## Источники
 
