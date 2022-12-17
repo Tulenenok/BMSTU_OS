@@ -98,7 +98,201 @@
 
 -----
 
+## Реализация
+
+Первое, что бы делаем -- настраиваем события `can_read` и `can_write`. Для этого используем функции [`CreateEvent`](https://learn.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-createeventa)
+
+```c
+HANDLE CreateEvent
+(
+	LPSECURITY_ATTRIBUTES lpEventAttributes,	// атрибут защиты
+	BOOL bManualReset,											  // тип сброса TRUE - ручной
+	BOOL bInitialState,											  // начальное состояние TRUE - сигнальное
+	LPCTSTR lpName														// имя обьекта
+);
+```
+
+Получаем следующий код инициализации:
+
+``` c
+HANDLE can_write;
+HANDLE can_read;
+
+int init()
+{
+    // Атрибут защиты по умолчанию, ручной сброс, состояние сигнальное, имя нет
+    // Первый нул также говорит о том, что дескриптор не может быть унаследован
+    // дочерними процессами
+    can_write = CreateEvent(NULL, TRUE, TRUE, NULL);
+    if(can_write == NULL)
+    {
+        perror("Error with CreateEvent (can_write)");
+        return -1;
+    }
+
+  
+    // FALSE -- система будет сбрасывать состояние события на nonsigned после освобождения
+    // одного ожидающего потока
+    can_read = CreateEvent(NULL, FALSE, TRUE, NULL);
+    if(can_read == NULL)
+    {
+        perror("Error with CreateEvent (can_read)");
+        return -1;
+    }
+    
+    return 0;
+}
+```
+
+---
+
+Теперь нам нужно создать потоки читателей и потоки писателей. Для этого используем функцию [`CreateThread`](https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-createthread).
+
+```c
+HANDLE CreateThread(
+  [in, optional]  LPSECURITY_ATTRIBUTES   lpThreadAttributes, // атрибут защиты
+  [in]            SIZE_T                  dwStackSize,				// начальный размер стека 
+  [in]            LPTHREAD_START_ROUTINE  lpStartAddress,			// начальный адрес потока
+  [in, optional]  __drv_aliasesMem LPVOID lpParameter,				// указатель на переменную, которая будет передана потоку
+  [in]            DWORD                   dwCreationFlags,	  // флаг управления потоком
+  [out, optional] LPDWORD                 lpThreadId				  // 	указатель на переменную, которая получит идентификатор потока
+);
+```
+
+```c
+int init_threads()
+{
+    for(int i = 0; i < 3; i++)
+    {
+        writers_id[i] = i;
+        writers_threads[i] = CreateThread(NULL, 0, &init_writer, writers_id + i, 0, NULL);        
+
+        if (writers_threads[i] == NULL)
+        {
+            perror("Error with CreateThread (writer)");
+            return -1;
+        }
+...
+```
+
+-----
+
+Здесь встает вопрос -- что такое инициализация читателя и писателя. 
+
+Будем считать инициализацией 8 записей или чтения переменной.
+
+```c
+DWORD WINAPI init_writer(CONST LPVOID param)
+{
+    int id = *(int *)param;
+    int sleep_time;
+
+    for(int i = 0; i < 8; i++)
+    {
+        sleep_time = 100 + rand() * time(NULL) % 400;
+        Sleep(sleep_time);
+
+        // здесь начинается критическая секция
+        start_write();
+
+        ++shared_variable;
+        printf("init_writer: %d  ----> write: %d\n", id, shared_variable);
+
+        stop_write();
+        // критическая секция закончилась 
+    }
+}
+```
+
+---
+
+Что такое start и stop?
+
+* Для писателя
+
+  Чтобы писатель мог начать писать ему нужен сигнал `can_write` -> `start_write` ожидает получение этого сигнала.
+
+  ```c
+  void start_write()
+  {
+      WaitForSingleObject(can_write, INFINITE);
+  }
+  ```
+
+  Когда писатель заканчивает работу ему нужно отправить в мир сигнал, что можно читать.
+
+  ```c
+  void stop_write()
+  {
+      SetEvent(can_read);
+  }
+  ```
+
+* Для читателя
+
+  Чтобы начать читать, читателю необходимо получить сигнал, что можно читать и сигнал, что можно писать (!!!). После чего он сбрасывает сигнал можно писать (чтобы никто не начал писать) и увеличивает переменную количество активных читателей на 1.
+
+  ```c
+  void start_read()
+  {
+      WaitForSingleObject(can_read, INFINITE);
+      WaitForSingleObject(can_write, INFINITE);
+      ResetEvent(can_write);
+  
+      InterlockedIncrement(&count_active_readers);
+  }
+  ```
+
+  Заканчивая чтения, читатель отправляет сигнал другим читателям сигнал на возможность чтения.
+
+  Если же он был последним в очереди читателей, то он отправляет сигнал писателям, что можно читать.
+
+  ```c
+  void stop_read()
+  {
+      InterlockedDecrement(&count_active_readers);
+  
+      SetEvent(can_read);
+  
+      if(count_active_readers == 0)
+          SetEvent(can_write);
+  }
+  ```
+
+-----
+
+Осталось только все аккуратно закрыть
+
+* Во-первых, ждем, пока все потоки отработают с помощью функции [`WaitForMultipleObjects`](https://learn.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-waitformultipleobjects)
+
+  ```c
+  void wait_threads()
+  {
+      // TRUE -- ждем все, а не один
+      WaitForMultipleObjects(3, writers_threads, TRUE, INFINITE);
+      WaitForMultipleObjects(5, writers_threads, TRUE, INFINITE);
+  }
+  ```
+
+* Во-вторых, закрываем все обработчики
+
+  ```c
+  void close_handles()
+  {
+      for(int i = 0; i < 3; i++)
+          CloseHandle(writers_threads[i]);
+  
+      for(int i = 0; i < 5; i++)
+          CloseHandle(readers_threads[i]);
+  
+      CloseHandle(can_write);
+      CloseHandle(can_read);
+  }
+  ```
+
 ## Источники
 
 1. [Общие термины](https://studfile.net/preview/5946428/page:72/)
 2. [Решение задачи читатели-писатели](https://pro-prof.com/forums/topic/hoar_modelling)
+3. [Некоторые функции](https://firststeps.ru/mfc/winapi/r.php?119)
+
