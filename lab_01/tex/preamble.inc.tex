@@ -1,0 +1,170 @@
+
+
+% \usepackage{cmap} % Улучшенный поиск русских слов в полученном pdf-файле
+% \usepackage[T2A]{fontenc} % Поддержка русских букв
+% \usepackage[utf8]{inputenc} % Кодировка utf8
+% \usepackage[english,russian]{babel} % Языки: русский, английский
+% %\usepackage{pscyr} % Нормальные шрифты
+% \usepackage{enumitem}
+
+% \makeatletter
+% \renewcommand\@biblabel[1]{#1.}
+% \makeatother
+
+% \usepackage{epstopdf}
+% \usepackage{svg}
+
+% \usepackage[14pt]{extsizes}
+
+\usepackage{svg}
+
+\usepackage{caption}
+% \captionsetup{labelsep=endash}
+% \captionsetup[figure]{name={Рисунок}}
+
+\usepackage{amsmath}
+\usepackage{diagbox}
+\usepackage{tikz}
+\usepackage[justification=centering]{caption}
+% \usepackage{pdfpages}
+
+% \usepackage{geometry}
+% \geometry{left=30mm}
+% \geometry{right=15mm}
+% \geometry{top=20mm}
+% \geometry{bottom=20mm}
+
+\usepackage{tablefootnote}
+
+% \usepackage{titlesec}
+% \titleformat{\section}
+% 	{\normalsize\bfseries}
+% 	{\thesection}
+% 	{1em}{}
+% \titlespacing*{\chapter}{0pt}{-30pt}{8pt}
+% \titlespacing*{\section}{\parindent}{*4}{*4}
+% \titlespacing*{\subsection}{\parindent}{*4}{*4}
+
+% \usepackage{setspace}
+% \onehalfspacing % Полуторный интервал
+
+% \frenchspacing
+% \usepackage{indentfirst} % Красная строка
+
+% \usepackage{titlesec}
+% \titleformat{\chapter}{\LARGE\bfseries}{\thechapter}{20pt}{\LARGE\bfseries}
+% \titleformat{\section}{\Large\bfseries}{\thesection}{20pt}{\Large\bfseries}
+
+% \usepackage{listings}
+% \usepackage{xcolor}
+
+% \usepackage{pgfplots}
+% \usetikzlibrary{datavisualization}
+% \usetikzlibrary{datavisualization.formats.functions}
+
+\usepackage{lscape}
+
+\usepackage{graphicx}
+\newcommand{\img}[3] {
+	\begin{figure}[h!]
+		\center{\includegraphics[height=#1]{inc/img/#2}}
+		\caption{#3}
+		\label{img:#2}
+	\end{figure}
+}
+\newcommand{\boximg}[3] {
+	\begin{figure}[h]
+		\center{\fbox{\includegraphics[height=#1]{inc/img/#2}}}
+		\caption{#3}
+		\label{img:#2}
+	\end{figure}
+}
+ % Настройка подписей float объектов
+
+% \usepackage[unicode,pdftex]{hyperref} % Ссылки в pdf
+% \hypersetup{hidelinks}
+
+% \usepackage{csvsimple}
+
+
+
+% \newcommand{\code}[1]{\texttt{#1}}
+
+% \usepackage{multirow}
+% \usepackage{makecell}
+
+% \setlength\parindent{1cm}
+
+\captionsetup[table]{singlelinecheck=false, labelsep=endash}
+
+% table of contents
+\usepackage{tocloft}
+\renewcommand{\cfttoctitlefont}{\hfill\large\bfseries}
+\renewcommand{\cftaftertoctitle}{\hfill\hfill}
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}
+\setlength\cftbeforetoctitleskip{-22pt}
+\setlength\cftaftertoctitleskip{15pt}
+
+% searchable and copyable
+\usepackage{cmap}
+
+% Times New Roman
+% \usepackage{pscyr}
+% \renewcommand{\rmdefault}{ftm}
+
+% % Links
+% \def\UrlBreaks{\do\/\do-\do\_}
+% \usepackage[nottoc]{tocbibind} % for bib link
+% \usepackage[numbers]{natbib}
+% \renewcommand*{\bibnumfmt}[1]{#1.}
+
+% %% Captions
+\usepackage[figurename=Рисунок,labelsep=endash,
+            justification=centering]{caption}
+\usepackage{hyphenat}
+
+% % Lists
+% \usepackage{enumitem}
+% \renewcommand{\labelitemi}{$-$}
+% \setlist{nosep, leftmargin=\parindent, wide}
+%
+% %% Comments
+% \usepackage{comment}
+% %
+% % Text
+% \usepackage{amstext}
+% \usepackage{ulem}
+% \renewcommand{\ULdepth}{1.5pt}
+
+% % % Formulas
+% % \DeclareMathOperator*{\argmax}{argmax}
+
+% % Tabulars
+% \usepackage{threeparttable}
+% \usepackage{csvsimple}
+% \usepackage{longtable,ltcaption,booktabs}
+% \usepackage{tabularx}
+% \usepackage{multirow}
+
+% % PDF
+% \usepackage{pdfpages}
+
+% % cites
+% \usepackage{natbib}
+% \bibpunct{[}{]}{;}{n}{}{}
+
+\lstset{ %
+	language=c++,   					% выбор языка для подсветки	
+	basicstyle=\small\sffamily,			% размер и начертание шрифта для подсветки кода
+	numbers=left,						% где поставить нумерацию строк (слева\справа)
+	%numberstyle=,					% размер шрифта для номеров строк
+	stepnumber=1,						% размер шага между двумя номерами строк
+	numbersep=5pt,						% как далеко отстоят номера строк от подсвечиваемого кода
+	frame=single,						% рисовать рамку вокруг кода
+	tabsize=4,							% размер табуляции по умолчанию равен 4 пробелам
+	captionpos=t,						% позиция заголовка вверху [t] или внизу [b]
+	breaklines=true,					
+	breakatwhitespace=true,				% переносить строки только если есть пробел
+	escapeinside={\#*}{*)},				% если нужно добавить комментарии в коде
+	backgroundcolor=\color{white},
+}
