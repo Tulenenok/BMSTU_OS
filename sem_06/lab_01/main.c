@@ -57,7 +57,7 @@ int main(int argc, char **argv)
         }
     }
 
-    sleep(3);
+    sleep(1);
     close(sockets[0]);
 
     read(sockets[1], buf, sizeof(buf));
