@@ -1,3 +1,9 @@
+/*
+ * Не надо делать sockstream, sockdgram, на обоих сторонах что-то
+ * unlink (не только close)
+ * fd sock (подчеркиваем, что это файловый дескриптор)
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>

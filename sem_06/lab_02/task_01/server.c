@@ -37,7 +37,7 @@ int main(void)
 {
     struct sockaddr srvr_name;
     char buf[BUF_SIZE];
-    int  bytes;
+    int bytes;
 
     if ((sock_fd = socket(AF_UNIX, SOCK_DGRAM, 0)) == -1)
     {
