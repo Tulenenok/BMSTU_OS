@@ -7,20 +7,16 @@
 #include <unistd.h>
 #include <signal.h>
 
-#define SOCK_NAME "mysocket.soc"
-#define BUF_SIZE 256
-
 int sock_fd;
 
 void del_socket(void)
 {
-    if (close(sock_fd) == -1) 
+    if (close(sock_fd) == -1)              
     {
         printf("close() failed");
         return;
     }
-
-    if (unlink(SOCK_NAME) == -1)
+    if (unlink("mysocket.soc") == -1)     
     {
         printf("unlink() returned -1");
     }
@@ -36,8 +32,8 @@ void sigint_handler(int signum)
 int main(void)
 {
     struct sockaddr srvr_name;
-    char buf[BUF_SIZE];
-    int bytes;
+    char buf[256];
+    int  bytes;
 
     if ((sock_fd = socket(AF_UNIX, SOCK_DGRAM, 0)) == -1)
     {
@@ -46,7 +42,7 @@ int main(void)
     }
 
     srvr_name.sa_family = AF_UNIX;
-    strcpy(srvr_name.sa_data, SOCK_NAME);
+    strcpy(srvr_name.sa_data, "mysocket.soc");
 	
     if (bind(sock_fd, &srvr_name, strlen(srvr_name.sa_data) + sizeof(srvr_name.sa_family)) == -1)
     {
@@ -55,8 +51,8 @@ int main(void)
         return EXIT_FAILURE;
     }
 
-    signal(SIGTSTP, sigint_handler); 
-
+    signal(SIGTSTP, sigint_handler);
+	
     printf("Waiting for messages.\nPress Ctrl + Z to stop...\n");
 
     while (1)
