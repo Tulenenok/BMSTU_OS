@@ -1,0 +1,177 @@
+
+
+MAPS
+
+address                   perms  offset  dev   inode                      pathname
+5599f2e86000-5599f2e87000 r--p 00000000 103:06 662344                    /home/tulenenok/Documents/OS/sem6/lab_02/aaa/a.out
+5599f2e87000-5599f2e88000 r-xp 00001000 103:06 662344                    /home/tulenenok/Documents/OS/sem6/lab_02/aaa/a.out
+5599f2e88000-5599f2e89000 r--p 00002000 103:06 662344                    /home/tulenenok/Documents/OS/sem6/lab_02/aaa/a.out
+5599f2e89000-5599f2e8a000 r--p 00002000 103:06 662344                    /home/tulenenok/Documents/OS/sem6/lab_02/aaa/a.out
+5599f2e8a000-5599f2e8b000 rw-p 00003000 103:06 662344                    /home/tulenenok/Documents/OS/sem6/lab_02/aaa/a.out
+5599f3df9000-5599f3e1a000 rw-p 00000000 00:00 0                          [heap]
+7f087e802000-7f087e805000 rw-p 00000000 00:00 0 
+7f087e805000-7f087e82d000 r--p 00000000 103:06 919649                    /usr/lib/x86_64-linux-gnu/libc.so.6
+7f087e82d000-7f087e9c2000 r-xp 00028000 103:06 919649                    /usr/lib/x86_64-linux-gnu/libc.so.6
+7f087e9c2000-7f087ea1a000 r--p 001bd000 103:06 919649    
+                /usr/lib/x86_64-linux-gnu/libc.so.6
+7f087ea1a000-7f087ea1e000 r--p 00214000 103:06 919649                    /usr/lib/x86_64-linux-gnu/libc.so.6
+7f087ea1e000-7f087ea20000 rw-p 00218000 103:06 919649                    /usr/lib/x86_64-linux-gnu/libc.so.6
+7f087ea20000-7f087ea2d000 rw-p 00000000 00:00 0 
+7f087ea3d000-7f087ea3f000 rw-p 00000000 00:00 0 
+7f087ea3f000-7f087ea41000 r--p 00000000 103:06 919641                    /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+7f087ea41000-7f087ea6b000 r-xp 00002000 103:06 919641                    /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+7f087ea6b000-7f087ea76000 r--p 0002c000 103:06 919641                    /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+7f087ea77000-7f087ea79000 r--p 00037000 103:06 919641                    /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+7f087ea79000-7f087ea7b000 rw-p 00039000 103:06 919641                    /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+7ffed6668000-7ffed668a000 rw-p 00000000 00:00 0         
+                 [stack]
+7ffed66ce000-7ffed66d2000 r--p 00000000 00:00 0                          [vvar]
+7ffed66d2000-7ffed66d4000 r-xp 00000000 00:00 0                          [vdso]
+ffffffffff600000-ffffffffff601000 --xp 00000000 00:00 0                  [vsyscall]
+
+
+STAT
+
+pid  27910
+comm  (a.out)
+state  S
+ppid  27532
+pgrp  27910
+session  27532
+tty_nr  34819
+tpgid  27910
+flags  4194304
+minflt  91
+cminflt  0
+majflt  0
+cmajflt  0
+utime  0
+stime  0
+cutime  0
+cstime  0
+priority  20
+nice  0
+num_threads  1
+itrealvalue  0
+starttime  391459
+vsize  2842624
+rss  235
+rsslim  18446744073709551615
+startcode  94119693676544
+endcode  94119693678089
+startstack  140732495590944
+kstkesp  0
+kstkeip  0
+signal  0
+blocked  0
+sigignore  16777216
+sigcatch  0
+wchan  1
+nswap  0
+cnswap  0
+exit_signal  17
+processor  2
+rt_priority  0
+policy  0
+delayacct_blkio_ticks  0
+guest_time  0
+cguest_time  0
+start_data  94119693688216
+end_data  94119693688848
+start_brk  94119709872128
+arg_start  140732495597270
+arg_end  140732495597278
+env_start  140732495597278
+env_end  140732495601648
+exit_code  0
+
+
+
+TASK
+
+27910  
+
+
+ENVIRON
+
+SHELL=/bin/bash
+SESSION_MANAGER=local/tulenenok:@/tmp/.ICE-unix/5475,unix/tulenenok:/tmp/.ICE-unix/5475
+QT_ACCESSIBILITY=1
+COLORTERM=truecolor
+XDG_CONFIG_DIRS=/etc/xdg/xdg-ubuntu-xorg:/etc/xdg
+SSH_AGENT_LAUNCHER=gnome-keyring
+XDG_MENU_PREFIX=gnome-
+TERM_PROGRAM_VERSION=1.77.1
+GNOME_DESKTOP_SESSION_ID=this-is-deprecated
+LANGUAGE=ru:en
+LC_ADDRESS=ru_RU.UTF-8
+GNOME_SHELL_SESSION_MODE=ubuntu
+LC_NAME=ru_RU.UTF-8
+SSH_AUTH_SOCK=/run/user/1000/keyring/ssh
+XMODIFIERS=@im=ibus
+DESKTOP_SESSION=ubuntu-xorg
+LC_MONETARY=ru_RU.UTF-8
+GTK_MODULES=gail:atk-bridge
+DBUS_STARTER_BUS_TYPE=session
+PWD=/home/tulenenok/Documents/OS/sem6/lab_02/aaa
+GSETTINGS_SCHEMA_DIR=/home/tulenenok/snap/code/124/.local/share/glib-2.0/schemas
+XDG_SESSION_DESKTOP=ubuntu-xorg
+LOGNAME=tulenenok
+GTK_EXE_PREFIX=/snap/code/124/usr
+XDG_SESSION_TYPE=x11
+GPG_AGENT_INFO=/run/user/1000/gnupg/S.gpg-agent:0:1
+SYSTEMD_EXEC_PID=5475
+XAUTHORITY=/run/user/1000/gdm/Xauthority
+VSCODE_GIT_ASKPASS_NODE=/snap/code/124/usr/share/code/code
+WINDOWPATH=2
+HOME=/home/tulenenok
+USERNAME=tulenenok
+LC_PAPER=ru_RU.UTF-8
+LANG=ru_RU.UTF-8
+LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+XDG_CURRENT_DESKTOP=Unity
+VTE_VERSION=6800
+GIT_ASKPASS=/snap/code/124/usr/share/code/resources/app/extensions/git/dist/askpass.sh
+GNOME_TERMINAL_SCREEN=/org/gnome/Terminal/screen/a89b4252_bf4f_4c44_b60d_2e5799666b4d
+CHROME_DESKTOP=code-url-handler.desktop
+VSCODE_GIT_ASKPASS_EXTRA_ARGS=--ms-enable-electron-run-as-node
+LESSCLOSE=/usr/bin/lesspipe %s %s
+XDG_SESSION_CLASS=user
+LC_IDENTIFICATION=ru_RU.UTF-8
+TERM=xterm-256color
+GTK_PATH=/snap/code/124/usr/lib/x86_64-linux-gnu/gtk-3.0
+LESSOPEN=| /usr/bin/lesspipe %s
+USER=tulenenok
+VSCODE_GIT_IPC_HANDLE=/run/user/1000/vscode-git-3c93c532ab.sock
+GNOME_TERMINAL_SERVICE=:1.113
+DISPLAY=:0
+SHLVL=2
+LOCPATH=/snap/code/124/usr/lib/locale
+LC_TELEPHONE=ru_RU.UTF-8
+QT_IM_MODULE=ibus
+LC_MEASUREMENT=ru_RU.UTF-8
+DBUS_STARTER_ADDRESS=unix:path=/run/user/1000/bus,guid=5d4b7031a7d688701f67466564341487
+PAPERSIZE=a4
+XDG_RUNTIME_DIR=/run/user/1000
+LC_TIME=ru_RU.UTF-8
+VSCODE_GIT_ASKPASS_MAIN=/snap/code/124/usr/share/code/resources/app/extensions/git/dist/askpass-main.js
+XDG_DATA_DIRS=/home/tulenenok/snap/code/124/.local/share:/home/tulenenok/snap/code/124:/snap/code/124/usr/share:/usr/share/ubuntu-xorg:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
+GDK_BACKEND=x11
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin
+GTK_USE_PORTAL=1
+GDMSESSION=ubuntu-xorg
+ORIGINAL_XDG_CURRENT_DESKTOP=ubuntu:GNOME
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus,guid=5d4b7031a7d688701f67466564341487
+GTK_IM_MODULE_FILE=/home/tulenenok/snap/code/common/.cache/immodules/immodules.cache
+GIO_MODULE_DIR=/home/tulenenok/snap/code/common/.cache/gio-modules
+LC_NUMERIC=ru_RU.UTF-8
+TERM_PROGRAM=vscode
+OLDPWD=/home/tulenenok/Documents/OS/sem6/lab_02
+_=./a.out
+
+EXE    /home/tulenenok/Documents/OS/sem6/lab_02/aaa/a.out
+
+
+PWD 
+
+/home/tulenenok/Documents/OS/sem6/lab_02/aaa
