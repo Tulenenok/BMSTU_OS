@@ -1,0 +1,76 @@
+\chapter{Используемые структуры}
+
+\begin{center}
+\captionsetup{justification=raggedright,singlelinecheck=off}
+\begin{lstlisting}[label=lst:add,caption=struct open\_flags]
+    struct open_flags {
+        int         open_flag;
+        umode_t     mode;
+        int         acc_mode;
+        int         intent;
+        int lookup_ flags;
+    };
+\end{lstlisting}
+\end{center}
+
+\begin{center}
+\captionsetup{justification=raggedright,singlelinecheck=off}
+\begin{lstlisting}[label=lst:add,caption=struct filename и 
+ struct audit\_names]
+    struct audit_names;
+    struct filename {
+        const char          *name;  /* pointer to actual string */
+        const __user char   *uptr;  /* original userland pointer */
+        int                 refcnt;
+        struct audit_names  *aname;
+        const char          iname[];
+    };
+    
+    struct audit_names {
+        struct list_head list;     /* audit_context -> names_list */
+        struct filename  *name;
+        int              name_len; /* number of chars to log */
+        bool             hidden; 
+        unsigned long    ino;
+        dev_t            dev;
+        umode_t          mode;
+        kuid_t           uid;
+        kgid_t           gid;
+        dev_t            rdev;
+        u32              osid;
+        struct audit_cap_data fcap;
+        unsigned int          fcap_ver;
+        unsigned char         type;
+        bool                  should_free;
+    };
+\end{lstlisting}
+\end{center}
+
+\begin{center}
+\captionsetup{justification=raggedright,singlelinecheck=off}
+\begin{lstlisting}[label=lst:add,caption=struct nameidata]
+    struct nameidata {
+        struct path         path;
+        struct qstr         last;
+        struct path         root;
+        struct inode        *inode;
+        unsigned int        flags, state;
+        unsigned            seq, m_seq, r_seq;
+        int last_           type;
+        unsigned            depth;
+        int total_          link_count;
+        struct saved {
+            struct path link;
+            struct delayed_call done;
+            const char *name;
+            unsigned seq;
+        } *stack, internal[EMBEDDED_LEVELS];
+        struct filename     *name;
+        struct nameidata    *saved;
+        unsigned            root_ seq;
+        int                 dfd;
+        kuid_t              dir_uid;
+        umode_t             dir_mode;
+    } __randomize_layout;
+\end{lstlisting}
+\end{center}
